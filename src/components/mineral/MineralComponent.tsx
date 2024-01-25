@@ -40,7 +40,7 @@ const MineralComponent: FC<IProps> = ({title, id, img, properties, group}) => {
    <li className={s.MineralComponent__item}>Цвет излома: {properties.strokeColor}</li>
    <li className={s.MineralComponent__item}>Блеск минерала: {properties.shine}</li>
    <li className={s.MineralComponent__item}>Цвет минерала: {properties.color}</li>
-   <li className={s.MineralComponent__item}>Люминесценция: {properties.luminescence ? 'Есть' : 'Нету'}</li>
+   <li className={s.MineralComponent__item}>Люминесценция: {properties.luminescence ? 'Есть' : 'Нет'}</li>
   </ul>
  </div>
 </div>

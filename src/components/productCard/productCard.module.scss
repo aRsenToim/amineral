@@ -1,0 +1,35 @@
+.ProductCard {
+ display: flex;
+ transition: 0.2s;
+ margin: 10px auto;
+ align-items: center;
+ -webkit-box-shadow: 10px 11px 8px 0px rgba(34, 60, 80, 0.2);
+ -moz-box-shadow: 10px 11px 8px 0px rgba(34, 60, 80, 0.2);
+ box-shadow: 10px 11px 8px 0px rgba(34, 60, 80, 0.2);
+ width: 95%;
+ cursor: pointer;
+
+ &__image {
+  object-fit: cover;
+  width: 140px;
+  height: 140px;
+ }
+
+ &__info {
+  margin-left: 20px;
+ }
+
+ &__link {
+  color: #000;
+  text-decoration: none;
+ }
+
+ &__id {
+  color: #a5a5a5;
+ }
+
+ &__group {
+  font-size: 18px;
+  margin: 3px 0px;
+ }
+}

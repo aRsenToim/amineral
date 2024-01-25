@@ -17,7 +17,7 @@ const Mineral: FC = () => {
 
 
  useEffect(() => {
-  if (!product || product?.idMineral !== id) {
+  if (!product || String(product?.idMineral) !==  id) {
    dispatch(getProductFetch(id ?? ''))
   }
  })

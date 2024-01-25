@@ -5,6 +5,7 @@ import Catalog from "../pages/catalog"
 import Search from "../pages/Search"
 import CreateGroup from "../pages/CreateGroup"
 import Mineral from "../pages/Mineral"
+import Info from "../pages/info"
 
 
 
@@ -20,7 +21,8 @@ enum RoutesNames {
  CreateGroup = '/creategroup',
  Catalog = '/catalog',
  Search = '/search',
- Mineral = '/mineral/:id'
+ Mineral = '/mineral/:id',
+ Info = '/info'
 }
 
 export const routes: IRoute[] = [
@@ -44,9 +46,11 @@ export const routes: IRoute[] = [
   element: Search,
   title: "Поиск"
  },
-]
-
-export const addRoutes: IRoute[] = [
+ {
+  path: RoutesNames.Info,
+  element: Info,
+  title: "Информация о сайте"
+ },
  {
   path: RoutesNames.Home,
   element: Home,

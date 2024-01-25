@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { productsApi } from "../../api/servies/productsApi";
 import { IProduct } from "../../types/productType";
-import { createProduct, setError, setProduct, setProducts } from "../slices/productsSlice";
+import { setError, setProduct, setProducts, setSearchProducts } from "../slices/productsSlice";
 import { AppDispatch } from "../store";
 import { setContent, setIsOpen, setTitleAlert } from "../slices/pagesSlice";
 
@@ -32,7 +32,7 @@ export const getProductFetch = (id: string) => async (dispatch: AppDispatch) => 
 export const createProductFetch = (product: IProduct) => async (dispatch: AppDispatch) => {
  try {
   productsApi.createProduct(product).then(() => {
-   dispatch(createProduct(product))
+   dispatch(getProductsFetch())
    dispatch(setTitleAlert('Успешно'))
    dispatch(setContent('Минерал создан'))
    dispatch(setIsOpen())
@@ -45,9 +45,23 @@ export const createProductFetch = (product: IProduct) => async (dispatch: AppDis
 export const searchProductFetch = (value: string) => async (dispatch: AppDispatch) => {
  try {
   productsApi.searchProduct(value).then((data: IProduct[]) => {
-   dispatch(setProducts(data))
+   dispatch(setSearchProducts(data))
   }).catch((err: AxiosError) => dispatch(setError(err.message)))
  } catch (error) {
   dispatch(setError('Не удается загрузить каталог минералов'))
+ }
+}
+
+
+export const deleteProductFetch = (id: number) => async (dispatch: AppDispatch) => {
+ try {
+  productsApi.deleteProduct(id).then(() => {
+   dispatch(getProductsFetch())
+   dispatch(setTitleAlert('Успешно'))
+   dispatch(setContent('Минерал удален'))
+   dispatch(setIsOpen())
+  }).catch((err: AxiosError) => dispatch(setError(err.message)))
+ } catch (err) {
+  dispatch(setError('Не удается удалить минерал'))
  }
 }

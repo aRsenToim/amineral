@@ -3,12 +3,14 @@ import { IProduct } from "../../types/productType";
 
 interface IInitialState {
  products: IProduct[] | null,
+ searchProducts: IProduct[] | null,
  error: string
  product: IProduct | null
 }
 
 const initialState: IInitialState = {
  products: null,
+ searchProducts: null,
  error: '',
  product: null
 }
@@ -27,12 +29,11 @@ const productsSlice = createSlice({
   setProduct(state, action: PayloadAction<IProduct>){
    state.product = action.payload
   },
-  createProduct(state, action: PayloadAction<IProduct>){
-   state.products?.push(action.payload)
-  },
-
+  setSearchProducts(state, action: PayloadAction<IProduct[]>){
+   state.searchProducts = action.payload
+  }
  }
 })
 
 export default productsSlice.reducer
-export const {setError, setProducts, setProduct, createProduct} = productsSlice.actions
+export const {setError, setProducts, setSearchProducts, setProduct} = productsSlice.actions

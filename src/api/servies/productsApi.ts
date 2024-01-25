@@ -20,5 +20,9 @@ export const productsApi = {
  async searchProduct(value: string){
   const data = await $api.get<IProduct[]>(`products?search=${value}`)
   return data.data
+ },
+ async deleteProduct(id: number){
+  const data = await $api.delete(`/products/${id}`)
+  return data
  }
 }

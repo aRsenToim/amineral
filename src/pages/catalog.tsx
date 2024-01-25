@@ -4,20 +4,24 @@ import { useMinerals } from "../hooks/useMinerals";
 import { IProduct } from "../types/productType";
 import { Button } from "@mui/material";
 import { NavLink, Navigate } from "react-router-dom";
+import { useAppDispatch } from "../store/hooks";
+import { deleteProductFetch } from "../store/actions/productsAction";
 
 const columns: GridColDef[] = [
- { field: 'id', headerName: 'ID минерала', width: 250 },
+ { field: 'idMineral', headerName: 'ID минерала', width: 250 },
  { field: 'title', headerName: 'Название минерала', width: 250 },
  { field: 'group', headerName: 'Группа минерала', width: 200 },
  { field: 'idGroup', headerName: 'ID Группы', width: 250 },
+ { field: 'id', headerName: 'ID', width: 250 },
 ];
 
 
 export interface IProductCard {
- id: string
+ idMineral: string
  title: string
  idGroup: string
  group: string
+ id: number
 }
 
 
@@ -26,22 +30,26 @@ const Catalog: FC = () => {
  const [isRow, setIsRow] = useState<number[]>([])
  const [rows, setRows] = useState<IProductCard[] | null>(null)
  const [isRedirect, setIsRedirect] = useState<boolean>(false)
+ const dispatch = useAppDispatch()
 
 
  const handleEvent: GridEventListener<'cellClick'> = (params) => {
   if (!params.value) {
-   setIsRow([...isRow, params.row.id])
+   setIsRow([...isRow, params.row.idMineral])
   } else {
    setIsRow([])
   }
  };
 
+ 
+
  useEffect(() => {
-  if (products && !rows) {
+  if (products) {
    let arr: IProductCard[] = []
    products.map((product: IProduct) => {
     arr.push({
-     id: product.idMineral,
+     idMineral: product.idMineral,
+     id: product.id,
      title: product.title,
      idGroup: product.group.id,
      group: product.group.title,
@@ -49,20 +57,21 @@ const Catalog: FC = () => {
    })
    setRows(arr)
   }
- })
+ }, [products])
+
 
  if (isRedirect) {
+
+  
   return <Navigate to={`/mineral/${isRow?.at(-1)}`} />
  }
 
 
  return <div style={{
-  margin: '0px auto',
-  width: "80%"
+  margin: '30px auto',
+  width: "90%"
  }}>
   <DataGrid
-   onColumnHeaderClick={(value) => { console.log(value);
-    }}
    rows={rows || []}
    columns={columns}
    onCellClick={handleEvent}
@@ -77,6 +86,9 @@ const Catalog: FC = () => {
   {JSON.stringify(isRow) == '[]' ? <Button variant="contained" disabled>
    Открыть
   </Button> : <Button onClick={() => { setIsRedirect(true) }} variant="contained">Открыть</Button>}
+  {JSON.stringify(isRow) == '[]' ? <Button variant="contained" disabled>
+   Удалить
+  </Button> : <Button onClick={() => {dispatch(deleteProductFetch(rows?.at(-1)?.id ?? 0))}} variant="contained">Удалить</Button>}
  </div>
 }
 
