@@ -65,3 +65,20 @@ export const deleteProductFetch = (id: number) => async (dispatch: AppDispatch) 
   dispatch(setError('Не удается удалить минерал'))
  }
 }
+
+
+export const changeProduct = (product: IProduct) => async (dispatch: AppDispatch) => {
+ try {
+  productsApi.changeProduct(product).then(() => {
+   dispatch(getProductsFetch())
+   dispatch(getProductFetch(product.idMineral))
+   dispatch(setTitleAlert('Успешно'))
+   dispatch(setContent('Минерал изменен'))
+   dispatch(setIsOpen())
+  })
+ } catch (error) {
+  dispatch(setTitleAlert('Ошибка'))
+  dispatch(setContent('Не удается изменить минерал'))
+  dispatch(setIsOpen())
+ }
+}

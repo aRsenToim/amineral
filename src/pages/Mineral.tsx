@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { getProductFetch } from "../store/actions/productsAction"
 import MineralComponent from "../components/mineral/MineralComponent"
+import Loader from "../components/loader/loader"
 
 
 
@@ -22,7 +23,7 @@ const Mineral: FC = () => {
   }
  })
 
- return <>{product ? <MineralComponent id={product.idMineral} title={product?.title} img={product.img} group={product.group} properties={product.properties}/> : undefined}</>
+ return <>{product ? <MineralComponent id={product.idMineral} title={product?.title} img={product.img} group={product.group} properties={product.properties}/> : <Loader/>}</>
 }
 
 

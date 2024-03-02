@@ -6,6 +6,7 @@ import Search from "../pages/Search"
 import CreateGroup from "../pages/CreateGroup"
 import Mineral from "../pages/Mineral"
 import Info from "../pages/info"
+import Change from "../pages/change"
 
 
 
@@ -22,7 +23,8 @@ enum RoutesNames {
  Catalog = '/catalog',
  Search = '/search',
  Mineral = '/mineral/:id',
- Info = '/info'
+ Info = '/info',
+ Сhange = '/change/:id'
 }
 
 export const routes: IRoute[] = [
@@ -60,5 +62,10 @@ export const routes: IRoute[] = [
   path: RoutesNames.Mineral,
   element: Mineral,
   title: "Mineral"
+ },
+ {
+  path: RoutesNames.Сhange,
+  element: Change,
+  title: ""
  }
 ]

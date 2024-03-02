@@ -6,6 +6,7 @@ import { Button } from "@mui/material";
 import { NavLink, Navigate } from "react-router-dom";
 import { useAppDispatch } from "../store/hooks";
 import { deleteProductFetch } from "../store/actions/productsAction";
+import Loader from "../components/loader/loader";
 
 const columns: GridColDef[] = [
  { field: 'idMineral', headerName: 'ID минерала', width: 250 },
@@ -30,6 +31,7 @@ const Catalog: FC = () => {
  const [isRow, setIsRow] = useState<number[]>([])
  const [rows, setRows] = useState<IProductCard[] | null>(null)
  const [isRedirect, setIsRedirect] = useState<boolean>(false)
+ const [isRedirectChange, setIsRedirectChange] = useState<boolean>(false)
  const dispatch = useAppDispatch()
 
 
@@ -41,7 +43,7 @@ const Catalog: FC = () => {
   }
  };
 
- 
+
 
  useEffect(() => {
   if (products) {
@@ -61,35 +63,40 @@ const Catalog: FC = () => {
 
 
  if (isRedirect) {
-
-  
   return <Navigate to={`/mineral/${isRow?.at(-1)}`} />
+ }else if(isRedirectChange){
+  return <Navigate to={`/change/${isRow?.at(-1)}`} />
  }
 
 
- return <div style={{
-  margin: '30px auto',
-  width: "90%"
- }}>
-  <DataGrid
-   rows={rows || []}
-   columns={columns}
-   onCellClick={handleEvent}
-   initialState={{
-    pagination: {
-     paginationModel: { page: 0, pageSize: 5 },
-    },
-   }}
-   pageSizeOptions={[5, 10]}
-   checkboxSelection
-  />
-  {JSON.stringify(isRow) == '[]' ? <Button variant="contained" disabled>
-   Открыть
-  </Button> : <Button onClick={() => { setIsRedirect(true) }} variant="contained">Открыть</Button>}
-  {JSON.stringify(isRow) == '[]' ? <Button variant="contained" disabled>
-   Удалить
-  </Button> : <Button onClick={() => {dispatch(deleteProductFetch(rows?.at(-1)?.id ?? 0))}} variant="contained">Удалить</Button>}
- </div>
+ return <>
+  {products ? <div style={{
+   margin: '30px auto',
+   width: "90%"
+  }}>
+   <DataGrid
+    rows={rows || []}
+    columns={columns}
+    onCellClick={handleEvent}
+    initialState={{
+     pagination: {
+      paginationModel: { page: 0, pageSize: 5 },
+     },
+    }}
+    pageSizeOptions={[5, 10]}
+    checkboxSelection
+   />
+   {JSON.stringify(isRow) == '[]' ? <Button variant="contained" disabled>
+    Открыть
+   </Button> : <Button onClick={() => { setIsRedirect(true) }} variant="contained">Открыть</Button>}
+   {JSON.stringify(isRow) == '[]' ? <Button variant="contained" disabled>
+    Удалить
+   </Button> : <Button onClick={() => { dispatch(deleteProductFetch(rows?.at(-1)?.id ?? 0)) }} variant="contained">Удалить</Button>}
+   {JSON.stringify(isRow) == '[]' ? <Button variant="contained" disabled>
+    Изменить
+   </Button> : <Button onClick={() => {setIsRedirectChange(true)}} variant="contained">Изменить</Button>}
+  </div> : <Loader />}
+ </>
 }
 
 
